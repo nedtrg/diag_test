@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #f0f2f5;
+  color: #1a1a2e;
+}
+
+input:focus {
+  outline: none;
+}
+
+.step-line {
+  width: 1px;
+  height: 32px;
+  background-color: #d1d5db;
+  margin-left: 18px;
+}
