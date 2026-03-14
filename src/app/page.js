@@ -489,7 +489,7 @@ function Step1({ onNext, formData, setFormData }) {
       >
         Already have an account?{" "}
         <a
-          href="#"
+          href="/login"
           style={{ color: "#4f46e5", fontWeight: 500, textDecoration: "none" }}
         >
           Login

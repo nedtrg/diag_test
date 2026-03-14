@@ -14,6 +14,7 @@ import {
   IconChevronLeft,
   IconChevronRight,
   IconTarget,
+  IconLogout,
 } from "@tabler/icons-react";
 
 /* ─── Responsive CSS ─────────────────────────────────────────────────────────  */
@@ -436,6 +437,7 @@ export default function Dashboard() {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const totalPages = 5;
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   // ── Data fetched from MongoDB via /api/me and /api/stats ──────────────────
   const [dashUser, setDashUser] = useState(null); // user from DB
@@ -489,6 +491,25 @@ export default function Dashboard() {
 
     loadDashboard();
   }, [router]);
+
+  const handleLogout = async () => {
+    const token =
+      typeof window !== "undefined"
+        ? localStorage.getItem("diag_session")
+        : null;
+    try {
+      await fetch("/api/logout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionToken: token }),
+      });
+    } catch {
+      /* still proceed */
+    }
+    localStorage.removeItem("diag_session");
+    localStorage.removeItem("diag_user");
+    router.push("/login");
+  };
 
   // Derived display values — fall back to placeholders while loading
   const displayName =
@@ -550,43 +571,145 @@ export default function Dashboard() {
                 }}
               />
             </div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "7px",
-                cursor: "pointer",
-              }}
-            >
+            {/* User menu */}
+            <div style={{ position: "relative" }}>
               <div
+                onClick={() => setShowUserMenu((m) => !m)}
                 style={{
-                  width: 32,
-                  height: 32,
-                  borderRadius: "50%",
-                  backgroundColor: "#e0e7ff",
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "0.75rem",
-                  fontWeight: 700,
-                  color: "#4f46e5",
-                  flexShrink: 0,
+                  gap: "7px",
+                  cursor: "pointer",
+                  padding: "4px 6px",
+                  borderRadius: "8px",
+                  transition: "background 0.15s",
                 }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.backgroundColor = "#f3f4f6")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor = "transparent")
+                }
               >
-                {initials || "U"}
+                <div
+                  style={{
+                    width: 32,
+                    height: 32,
+                    borderRadius: "50%",
+                    backgroundColor: "#e0e7ff",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "0.75rem",
+                    fontWeight: 700,
+                    color: "#4f46e5",
+                    flexShrink: 0,
+                  }}
+                >
+                  {initials || "U"}
+                </div>
+                <span
+                  style={{
+                    fontSize: "0.875rem",
+                    fontWeight: 500,
+                    color: "#374151",
+                    display: "none",
+                  }}
+                  className="nav-name"
+                >
+                  {displayName}
+                </span>
+                <IconChevronDown size={14} color="#9ca3af" />
               </div>
-              <span
-                style={{
-                  fontSize: "0.875rem",
-                  fontWeight: 500,
-                  color: "#374151",
-                  display: "none",
-                }}
-                className="nav-name"
-              >
-                {displayName}
-              </span>
-              <IconChevronDown size={14} color="#9ca3af" />
+
+              {showUserMenu && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "calc(100% + 8px)",
+                    right: 0,
+                    backgroundColor: "white",
+                    border: "1px solid #e5e7eb",
+                    borderRadius: "10px",
+                    boxShadow: "0 4px 20px rgba(0,0,0,0.12)",
+                    minWidth: "180px",
+                    zIndex: 100,
+                    overflow: "hidden",
+                  }}
+                >
+                  <div
+                    style={{
+                      padding: "12px 14px",
+                      borderBottom: "1px solid #f3f4f6",
+                    }}
+                  >
+                    <p
+                      style={{
+                        fontSize: "0.8rem",
+                        fontWeight: 600,
+                        color: "#111827",
+                        margin: 0,
+                      }}
+                    >
+                      {displayName}
+                    </p>
+                    <p
+                      style={{
+                        fontSize: "0.72rem",
+                        color: "#9ca3af",
+                        margin: "2px 0 0",
+                      }}
+                    >
+                      {dashUser?.email || ""}
+                    </p>
+                  </div>
+                  <div style={{ padding: "4px 0" }}>
+                    <div
+                      onClick={() => setShowUserMenu(false)}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "10px",
+                        padding: "9px 14px",
+                        cursor: "pointer",
+                        fontSize: "0.8rem",
+                        color: "#374151",
+                      }}
+                      onMouseEnter={(e) =>
+                        (e.currentTarget.style.backgroundColor = "#f9fafb")
+                      }
+                      onMouseLeave={(e) =>
+                        (e.currentTarget.style.backgroundColor = "transparent")
+                      }
+                    >
+                      <IconSettings size={15} color="#6b7280" />
+                      Settings
+                    </div>
+                    <div
+                      onClick={handleLogout}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "10px",
+                        padding: "9px 14px",
+                        cursor: "pointer",
+                        fontSize: "0.8rem",
+                        color: "#dc2626",
+                        borderTop: "1px solid #f3f4f6",
+                      }}
+                      onMouseEnter={(e) =>
+                        (e.currentTarget.style.backgroundColor = "#fef2f2")
+                      }
+                      onMouseLeave={(e) =>
+                        (e.currentTarget.style.backgroundColor = "transparent")
+                      }
+                    >
+                      <IconLogout size={15} color="#dc2626" />
+                      Sign Out
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <style>{`@media(min-width:640px){.nav-name{display:inline!important}}`}</style>
