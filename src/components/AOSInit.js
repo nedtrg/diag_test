@@ -11,7 +11,18 @@ export default function AOSInit() {
       once: true,
       mirror: false,
       easing: "ease-out-cubic",
+      startEvent: "DOMContentLoaded",
     });
+
+    window.addEventListener("load", () => {
+      AOS.refresh();
+    });
+
+    return () => {
+      window.removeEventListener("load", () => {
+        AOS.refresh();
+      });
+    };
   }, []);
 
   return null;
