@@ -426,13 +426,14 @@ function PrimaryButton({ children, onClick, disabled, loading }) {
       disabled={disabled || loading}
       style={{
         width: "100%",
+        fontFamily: "Montserrat, sans-serif",
         padding: "14px",
         backgroundColor: disabled || loading ? "#a5b4fc" : "#4f46e5",
         color: "white",
         border: "none",
         borderRadius: "8px",
         fontSize: "0.875rem",
-        fontWeight: 600,
+        fontWeight: 500,
         cursor: disabled || loading ? "not-allowed" : "pointer",
         marginBottom: "16px",
         transition: "background-color 0.2s",
@@ -743,6 +744,7 @@ function Step1({ onNext, formData, setFormData }) {
           justifyContent: "center",
           gap: "10px",
           cursor: "pointer",
+          fontFamily: "Montserrat, sans-serif",
           fontSize: "0.875rem",
           fontWeight: 500,
           color: "#374151",

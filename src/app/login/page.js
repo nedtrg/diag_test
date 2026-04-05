@@ -316,10 +316,10 @@ export default function LoginPage() {
                 border: "none",
                 borderRadius: "8px",
                 fontSize: "0.875rem",
-                fontWeight: 600,
+                fontWeight: 500,
                 cursor: loading ? "not-allowed" : "pointer",
                 marginBottom: "16px",
-                fontFamily: "Inter, sans-serif",
+                fontFamily: "Montserrat, sans-serif",
               }}
               onMouseEnter={(e) => {
                 if (!loading) e.target.style.backgroundColor = "#4338ca";
@@ -359,7 +359,7 @@ export default function LoginPage() {
                 fontSize: "0.875rem",
                 fontWeight: 500,
                 color: "#374151",
-                fontFamily: "Inter, sans-serif",
+                fontFamily: "Montserrat, sans-serif",
                 marginBottom: "24px",
               }}
               onMouseEnter={(e) =>
