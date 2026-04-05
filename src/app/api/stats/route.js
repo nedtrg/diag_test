@@ -9,6 +9,8 @@ export async function GET(request) {
     await connectDB();
     const { searchParams } = new URL(request.url);
     const token = searchParams.get("token");
+    const page = parseInt(searchParams.get("page") || "1");
+    const limit = 5;
 
     if (!token)
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -20,8 +22,15 @@ export async function GET(request) {
         { status: 401 },
       );
 
-    // Fetch real users from MongoDB for the signups table
-    const allUsers = await User.find({}).sort({ createdAt: -1 }).limit(10);
+    const totalUsers = await User.countDocuments({});
+    const totalPages = Math.ceil(totalUsers / limit);
+    const skip = (page - 1) * limit;
+
+    const allUsers = await User.find({})
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
     const activeCount = await User.countDocuments({ status: "Active" });
 
     const recentSignups = allUsers.map((u) => ({
@@ -43,8 +52,12 @@ export async function GET(request) {
         planBreakdown: PLAN_BREAKDOWN,
         countryBreakdown: COUNTRY_BREAKDOWN,
       },
-      // Use real DB users if any exist, otherwise show demo data
       recentSignups: recentSignups.length > 0 ? recentSignups : DEMO_SIGNUPS,
+      pagination: {
+        page,
+        totalPages: totalPages > 0 ? totalPages : 1,
+        total: totalUsers,
+      },
     });
   } catch (err) {
     console.error("[MongoDB] /api/stats error:", err);

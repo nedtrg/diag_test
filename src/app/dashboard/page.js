@@ -13,9 +13,9 @@ import {
   IconChevronDown,
   IconChevronLeft,
   IconChevronRight,
-  IconTarget,
   IconLogout,
 } from "@tabler/icons-react";
+import Image from "next/image";
 
 /* ─── Responsive CSS ─────────────────────────────────────────────────────────  */
 const DASH_CSS = `
@@ -30,20 +30,17 @@ const DASH_CSS = `
     padding: 12px 16px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 100px;
     position: sticky;
     top: 0;
     z-index: 50;
   }
   .nav-search {
     flex: 1;
-    max-width: 360px;
+    max-width: 400px;
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #f9fafb;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
     padding: 8px 12px;
     font-size: 0.875rem;
     color: #9ca3af;
@@ -123,15 +120,17 @@ const DASH_CSS = `
 function DiagLogo() {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <circle cx="14" cy="14" r="14" fill="#4f46e5" />
-        <path d="M8 14 Q14 6 20 14 Q14 22 8 14Z" fill="white" opacity="0.9" />
-        <circle cx="14" cy="14" r="3" fill="#818cf8" />
-      </svg>
+      <Image
+        src="/Ellipse-1.png" // Replace with your logo icon path
+        alt="DIAG Logo"
+        width={28}
+        height={28}
+        className="opacity-100"
+      />
       <span
         style={{
-          fontFamily: "Inter, sans-serif",
-          fontWeight: 700,
+          fontFamily: "Montserrat, sans-serif",
+          fontWeight: 500,
           fontSize: "1rem",
           color: "#1f2937",
           letterSpacing: "0.08em",
@@ -202,9 +201,9 @@ function AreaChart() {
           x={180 * scaleX - 55}
           y={25 * scaleY - 32}
           width="100"
-          height="28"
+          height="40"
           rx="6"
-          fill="#1f2937"
+          fill="#0E0697"
         />
         <text
           x={180 * scaleX - 5}
@@ -260,47 +259,162 @@ function BarChart() {
     { label: "Business", value: 150 },
     { label: "Enterprise", value: 150 },
   ];
+
   const maxVal = 300;
+  const chartHeight = 200;
+  const yLabels = [300, 200, 100, 0];
+  const gridLines = [300, 200, 100];
+
   return (
     <div
       style={{
         display: "flex",
-        alignItems: "flex-end",
-        gap: "12px",
-        height: "100px",
+        alignItems: "stretch",
+        gap: "8px",
         width: "100%",
+        paddingLeft: "20px",
       }}
     >
-      {bars.map((bar) => (
-        <div
-          key={bar.label}
+      {/* Rotated Y-axis label */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "14px",
+          flexShrink: 0,
+        }}
+      >
+        <span
           style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "6px",
-            flex: 1,
+            fontSize: "0.65rem",
+            color: "#9ca3af",
+            transform: "rotate(-90deg)",
+            whiteSpace: "nowrap",
+            display: "block",
           }}
         >
+          Active users
+        </span>
+      </div>
+
+      {/* Y-axis numbers */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          height: `${chartHeight}px`,
+          paddingBottom: "24px",
+          flexShrink: 0,
+        }}
+      >
+        {yLabels.map((val) => (
+          <span
+            key={val}
+            style={{ fontSize: "0.65rem", color: "#9ca3af", lineHeight: 1 }}
+          >
+            {val}
+          </span>
+        ))}
+      </div>
+
+      {/* Chart area */}
+      <div style={{ flex: 1, position: "relative" }}>
+        {/* Grid lines */}
+        <div style={{ position: "relative", height: `${chartHeight - 24}px` }}>
+          {gridLines.map((val) => (
+            <div
+              key={val}
+              style={{
+                position: "absolute",
+                bottom: `${(val / maxVal) * 100}%`,
+                left: 0,
+                right: 0,
+                height: "1px",
+                backgroundColor: "#e5e7eb",
+                zIndex: 0,
+              }}
+            />
+          ))}
+
+          {/* Bottom baseline */}
           <div
             style={{
-              width: "100%",
-              height: `${(bar.value / maxVal) * 90}px`,
-              backgroundColor: "#c7d2fe",
-              borderRadius: "4px 4px 0 0",
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: "1px",
+              backgroundColor: "#e5e7eb",
             }}
           />
-          <span
+
+          {/* Bars */}
+          <div
             style={{
-              fontSize: "0.6rem",
-              color: "#9ca3af",
-              textAlign: "center",
+              display: "flex",
+              alignItems: "flex-end",
+              justifyContent: "space-around",
+              height: "100%",
+              position: "relative",
+              zIndex: 1,
+              paddingBottom: "0px",
             }}
           >
-            {bar.label}
-          </span>
+            {bars.map((bar) => {
+              const barHeight = (bar.value / maxVal) * (chartHeight - 24);
+              return (
+                <div
+                  key={bar.label}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "0px",
+                    flex: 1,
+                    maxWidth: "60px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "100%",
+                      height: `${barHeight}px`,
+                      background:
+                        "linear-gradient(180deg, #c7d2fe 0%, #a5b4fc 100%)",
+                      borderRadius: "10px 10px 0 0",
+                    }}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
-      ))}
+
+        {/* X-axis labels */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            marginTop: "8px",
+          }}
+        >
+          {bars.map((bar) => (
+            <span
+              key={bar.label}
+              style={{
+                fontSize: "0.72rem",
+                color: "#6b7280",
+                flex: 1,
+                maxWidth: "80px",
+                textAlign: "center",
+              }}
+            >
+              {bar.label}
+            </span>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
@@ -310,14 +424,18 @@ function DonutChart() {
     { pct: 40, color: "#1e1b4b", label: "Nigeria", count: 160 },
     { pct: 20, color: "#4f46e5", label: "UK", count: 80 },
     { pct: 30, color: "#a5b4fc", label: "US", count: 120 },
-    { pct: 10, color: "#86efac", label: "Others", count: 40 },
+    { pct: 10, color: "#4ade80", label: "Others", count: 40 },
   ];
+
   const r = 45,
     cx = 55,
     cy = 55,
-    strokeW = 18;
+    strokeW = 16;
   const circumference = 2 * Math.PI * r;
+  const gapDegrees = 4;
+
   let offset = 0;
+
   return (
     <div>
       <div
@@ -329,10 +447,13 @@ function DonutChart() {
       >
         <svg width="110" height="110" viewBox="0 0 110 110">
           {segments.map((seg, i) => {
-            const dash = (seg.pct / 100) * circumference,
-              gap = circumference - dash;
-            const rotate = (offset / 100) * 360 - 90;
+            const segDegrees = (seg.pct / 100) * 360;
+            const adjustedDegrees = segDegrees - gapDegrees;
+            const dash = (adjustedDegrees / 360) * circumference;
+            const emptyDash = circumference - dash;
+            const rotate = (offset / 100) * 360 - 90 + gapDegrees / 2;
             offset += seg.pct;
+
             return (
               <circle
                 key={i}
@@ -342,7 +463,8 @@ function DonutChart() {
                 fill="none"
                 stroke={seg.color}
                 strokeWidth={strokeW}
-                strokeDasharray={`${dash} ${gap}`}
+                strokeDasharray={`${dash} ${emptyDash}`}
+                strokeLinecap="butt"
                 transform={`rotate(${rotate} ${cx} ${cy})`}
               />
             );
@@ -352,7 +474,7 @@ function DonutChart() {
             y={cy - 4}
             textAnchor="middle"
             fontSize="14"
-            fontWeight="700"
+            fontWeight="500"
             fill="#111827"
           >
             400
@@ -368,13 +490,19 @@ function DonutChart() {
           </text>
         </svg>
       </div>
+
+      {/* Legend */}
       <div
-        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px" }}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "8px 12px",
+        }}
       >
         {segments.map((seg) => (
           <div
             key={seg.label}
-            style={{ display: "flex", alignItems: "center", gap: "5px" }}
+            style={{ display: "flex", alignItems: "flex-start", gap: "6px" }}
           >
             <div
               style={{
@@ -383,21 +511,30 @@ function DonutChart() {
                 borderRadius: "50%",
                 backgroundColor: seg.color,
                 flexShrink: 0,
+                marginTop: "3px",
               }}
             />
-            <span style={{ fontSize: "0.6rem", color: "#6b7280" }}>
-              {seg.label} ({seg.pct}%)
-            </span>
-            <span
-              style={{
-                fontSize: "0.6rem",
-                color: "#111827",
-                fontWeight: 600,
-                marginLeft: "auto",
-              }}
-            >
-              {seg.count}
-            </span>
+            <div>
+              <div
+                style={{
+                  fontSize: "0.6rem",
+                  color: "#6b7280",
+                  lineHeight: 1.3,
+                }}
+              >
+                {seg.label} ({seg.pct}%)
+              </div>
+              <div
+                style={{
+                  fontSize: "0.85rem",
+                  color: "#111827",
+                  fontWeight: 500,
+                  lineHeight: 1.2,
+                }}
+              >
+                {seg.count}
+              </div>
+            </div>
           </div>
         ))}
       </div>
@@ -412,17 +549,6 @@ const STATUS_STYLES = {
   "In-active": { backgroundColor: "#f3f4f6", color: "#6b7280" },
 };
 
-// Avatar colours cycle for signups table rows
-const AVATAR_COLORS = [
-  "#e0e7ff",
-  "#fef3c7",
-  "#fce7f3",
-  "#dcfce7",
-  "#f3e8ff",
-  "#fee2e2",
-  "#e0f2fe",
-];
-
 const NAV_ITEMS = [
   { label: "Dashboard", icon: IconLayoutDashboard },
   { label: "Report", icon: IconChartBar },
@@ -436,7 +562,7 @@ const NAV_ITEMS = [
 export default function Dashboard() {
   const router = useRouter();
   const [page, setPage] = useState(1);
-  const totalPages = 5;
+  const [totalPages, setTotalPages] = useState(1);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   // ── Data fetched from MongoDB via /api/me and /api/stats ──────────────────
@@ -464,7 +590,7 @@ export default function Dashboard() {
       try {
         const [meRes, statsRes] = await Promise.all([
           fetch(`/api/me?token=${token}`),
-          fetch(`/api/stats?token=${token}`),
+          fetch(`/api/stats?token=${token}&page=${page}`),
         ]);
 
         if (meRes.status === 401 || statsRes.status === 401) {
@@ -481,6 +607,10 @@ export default function Dashboard() {
         if (meData.user) setDashUser(meData.user);
         if (statsData.stats) setStats(statsData.stats);
         if (statsData.recentSignups) setSignups(statsData.recentSignups);
+        if (statsData.stats) setStats(statsData.stats);
+        if (statsData.recentSignups) setSignups(statsData.recentSignups);
+        if (statsData.pagination)
+          setTotalPages(statsData.pagination.totalPages);
       } catch (err) {
         console.error("[Dashboard] fetch error:", err);
         setFetchError("Could not load dashboard data. Please refresh.");
@@ -490,7 +620,7 @@ export default function Dashboard() {
     }
 
     loadDashboard();
-  }, [router]);
+  }, [router, page]);
 
   const handleLogout = async () => {
     const token =
@@ -537,8 +667,8 @@ export default function Dashboard() {
           <DiagLogo />
           <div className="nav-search">
             <svg
-              width="15"
-              height="15"
+              width="20"
+              height="20"
               fill="none"
               viewBox="0 0 24 24"
               stroke="#9ca3af"
@@ -566,7 +696,7 @@ export default function Dashboard() {
                   right: -2,
                   width: 8,
                   height: 8,
-                  backgroundColor: "#f59e0b",
+                  backgroundColor: "#4F46E5",
                   borderRadius: "50%",
                 }}
               />
@@ -591,23 +721,17 @@ export default function Dashboard() {
                   (e.currentTarget.style.backgroundColor = "transparent")
                 }
               >
-                <div
+                <img
+                  src={`https://api.dicebear.com/7.x/avataaars/png?seed=${encodeURIComponent(dashUser?.email || "user")}&backgroundColor=b6e3f4,c0aede,d1d4f9&radius=50`}
+                  alt={displayName}
                   style={{
                     width: 32,
                     height: 32,
                     borderRadius: "50%",
-                    backgroundColor: "#e0e7ff",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "0.75rem",
-                    fontWeight: 700,
-                    color: "#4f46e5",
                     flexShrink: 0,
+                    objectFit: "cover",
                   }}
-                >
-                  {initials || "U"}
-                </div>
+                />
                 <span
                   style={{
                     fontSize: "0.875rem",
@@ -748,22 +872,21 @@ export default function Dashboard() {
             <div
               style={{
                 margin: "16px",
-                padding: "16px",
+                padding: "20px",
                 backgroundColor: "#f5f3ff",
                 borderRadius: "12px",
               }}
             >
-              <IconTarget
-                size={28}
-                color="#4f46e5"
-                style={{ marginBottom: "8px" }}
-              />
+              <div className="trial-icon" style={{ marginBottom: "12px" }}>
+                <Image src="/Vector2.png" alt="Gift" width={32} height={32} />
+              </div>
+
               <p
                 style={{
                   fontSize: "0.8rem",
                   fontWeight: 700,
                   color: "#111827",
-                  marginBottom: "4px",
+                  marginBottom: "12px",
                 }}
               >
                 You're on a 7-day free trial
@@ -817,8 +940,8 @@ export default function Dashboard() {
 
             <h1
               style={{
-                fontFamily: "Inter, sans-serif",
-                fontWeight: 700,
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: 500,
                 fontSize: "clamp(1.2rem, 3vw, 1.5rem)",
                 color: "#111827",
                 marginBottom: "20px",
@@ -861,7 +984,7 @@ export default function Dashboard() {
                   <p
                     style={{
                       fontSize: "0.68rem",
-                      fontWeight: 600,
+                      fontWeight: 500,
                       color: "#9ca3af",
                       letterSpacing: "0.05em",
                       marginBottom: "8px",
@@ -881,7 +1004,7 @@ export default function Dashboard() {
                       style={{
                         fontSize: "clamp(1.1rem, 2.5vw, 1.4rem)",
                         fontWeight: 700,
-                        color: "#111827",
+                        color: "#3A3A3AE5",
                       }}
                     >
                       {card.value}
@@ -889,7 +1012,7 @@ export default function Dashboard() {
                     <span
                       style={{
                         fontSize: "0.8rem",
-                        fontWeight: 600,
+                        fontWeight: 500,
                         color: card.positive ? "#16a34a" : "#dc2626",
                       }}
                     >
@@ -924,7 +1047,7 @@ export default function Dashboard() {
                   <p
                     style={{
                       fontSize: "0.68rem",
-                      fontWeight: 600,
+                      fontWeight: 500,
                       color: "#9ca3af",
                       letterSpacing: "0.05em",
                     }}
@@ -939,12 +1062,12 @@ export default function Dashboard() {
                       background: "none",
                       border: "none",
                       cursor: "pointer",
-                      fontSize: "0.72rem",
+                      fontSize: "0.68rem",
                       color: "#4f46e5",
                       fontWeight: 500,
                     }}
                   >
-                    THIS MONTH <IconChevronDown size={12} />
+                    THIS MONTH <IconChevronDown size={30} />
                   </button>
                 </div>
                 <div style={{ display: "flex", gap: "8px" }}>
@@ -977,6 +1100,7 @@ export default function Dashboard() {
                   borderRadius: "12px",
                   padding: "18px",
                   boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+                  width: "100%",
                 }}
               >
                 <div
@@ -992,7 +1116,7 @@ export default function Dashboard() {
                   <p
                     style={{
                       fontSize: "0.68rem",
-                      fontWeight: 600,
+                      fontWeight: 500,
                       color: "#9ca3af",
                       letterSpacing: "0.05em",
                     }}
@@ -1007,31 +1131,15 @@ export default function Dashboard() {
                       background: "none",
                       border: "none",
                       cursor: "pointer",
-                      fontSize: "0.72rem",
+                      fontSize: "0.68rem",
                       color: "#4f46e5",
                       fontWeight: 500,
                     }}
                   >
-                    THIS MONTH <IconChevronDown size={12} />
+                    THIS MONTH <IconChevronDown size={30} />
                   </button>
                 </div>
-                <div style={{ display: "flex", gap: "8px" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-between",
-                      paddingBottom: "20px",
-                      fontSize: "0.6rem",
-                      color: "#9ca3af",
-                      flexShrink: 0,
-                    }}
-                  >
-                    <span>300</span>
-                    <span>200</span>
-                    <span>100</span>
-                    <span>0</span>
-                  </div>
+                <div style={{ display: "flex" }}>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <BarChart />
                   </div>
@@ -1050,7 +1158,7 @@ export default function Dashboard() {
                 <p
                   style={{
                     fontSize: "0.68rem",
-                    fontWeight: 600,
+                    fontWeight: 500,
                     color: "#9ca3af",
                     letterSpacing: "0.05em",
                     marginBottom: "12px",
@@ -1079,10 +1187,10 @@ export default function Dashboard() {
               >
                 <h2
                   style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontWeight: 700,
-                    fontSize: "1rem",
-                    color: "#111827",
+                    fontFamily: "Montserrat, sans-serif",
+                    fontWeight: 500,
+                    fontSize: "20px",
+                    color: "#3A3A3AE5",
                   }}
                 >
                   Latest Signups
@@ -1098,13 +1206,15 @@ export default function Dashboard() {
                             key={h}
                             className={i === 3 ? "col-joined" : ""}
                             style={{
-                              padding: "11px 18px",
+                              padding: "15px 18px",
                               textAlign: "left",
-                              fontSize: "0.68rem",
+                              fontSize: "14px",
+                              lineHeight: "18px",
                               fontWeight: 700,
                               color: "#9ca3af",
                               letterSpacing: "0.05em",
                               whiteSpace: "nowrap",
+                              backgroundColor: "#f9fafb",
                             }}
                           >
                             {h}
@@ -1123,6 +1233,7 @@ export default function Dashboard() {
                             textAlign: "center",
                             fontSize: "0.875rem",
                             color: "#9ca3af",
+                            fontWeight: 500,
                           }}
                         >
                           Loading signups…
@@ -1137,6 +1248,7 @@ export default function Dashboard() {
                             textAlign: "center",
                             fontSize: "0.875rem",
                             color: "#9ca3af",
+                            fontWeight: 500,
                           }}
                         >
                           No signups yet.
@@ -1144,8 +1256,6 @@ export default function Dashboard() {
                       </tr>
                     ) : (
                       signups.map((row, i) => {
-                        const avatarColor =
-                          AVATAR_COLORS[i % AVATAR_COLORS.length];
                         const initials2 = (row.name || row.email || "?")
                           .split(" ")
                           .map((n) => n[0])
@@ -1170,28 +1280,23 @@ export default function Dashboard() {
                                   gap: "9px",
                                 }}
                               >
-                                <div
+                                <img
+                                  src={`https://api.dicebear.com/7.x/avataaars/png?seed=${encodeURIComponent(row.email)}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf&radius=50`}
+                                  alt={row.name}
                                   style={{
                                     width: 30,
                                     height: 30,
                                     borderRadius: "50%",
-                                    backgroundColor: avatarColor,
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    fontSize: "0.68rem",
-                                    fontWeight: 700,
-                                    color: "#4f46e5",
                                     flexShrink: 0,
+                                    objectFit: "cover",
                                   }}
-                                >
-                                  {initials2}
-                                </div>
+                                />
                                 <span
                                   style={{
                                     fontSize: "0.8rem",
                                     color: "#374151",
                                     whiteSpace: "nowrap",
+                                    fontWeight: 500,
                                   }}
                                 >
                                   {row.name || "—"}
@@ -1204,6 +1309,7 @@ export default function Dashboard() {
                                 fontSize: "0.8rem",
                                 color: "#374151",
                                 whiteSpace: "nowrap",
+                                fontWeight: 500,
                               }}
                             >
                               {row.email}
@@ -1213,6 +1319,7 @@ export default function Dashboard() {
                                 padding: "13px 18px",
                                 fontSize: "0.8rem",
                                 color: "#374151",
+                                fontWeight: 500,
                               }}
                             >
                               {row.plan}
@@ -1224,6 +1331,7 @@ export default function Dashboard() {
                                 fontSize: "0.8rem",
                                 color: "#6b7280",
                                 whiteSpace: "nowrap",
+                                fontWeight: 500,
                               }}
                             >
                               {row.joinedAgo}

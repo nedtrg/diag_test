@@ -8,8 +8,8 @@ import {
   IconChevronLeft,
   IconInfoCircle,
   IconCheck,
-  IconBrandGoogle,
 } from "@tabler/icons-react";
+import Image from "next/image";
 
 /* ─── Responsive styles ─────────────────────────────────────────────────────── */
 const GLOBAL_CSS = `
@@ -46,7 +46,7 @@ const GLOBAL_CSS = `
   @media (min-width: 480px) { .form-card { padding: 36px 32px; } }
   @media (min-width: 768px) { .form-card { padding: 44px 48px; min-height: 540px; } }
 
-  .step-heading { font-family: Inter, sans-serif; font-weight: 700; font-size: clamp(1.35rem, 4vw, 1.75rem); color: #111827; margin-bottom: 8px; }
+  .step-heading { font-family: Montserrat, sans-serif; font-weight: 500; line-height: 100%; font-size: 32px; color: #3A3A3AE5; margin-bottom: 10px; }
 
   .otp-row { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
   .otp-input { width: 46px; height: 52px; text-align: center; font-size: 1.2rem; font-weight: 600; border: 1.5px solid #e5e7eb; border-radius: 8px; background: white; color: #111827; flex-shrink: 0; outline: none; }
@@ -63,15 +63,17 @@ const GLOBAL_CSS = `
 function DiagLogo() {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <circle cx="14" cy="14" r="14" fill="#4f46e5" />
-        <path d="M8 14 Q14 6 20 14 Q14 22 8 14Z" fill="white" opacity="0.9" />
-        <circle cx="14" cy="14" r="3" fill="#818cf8" />
-      </svg>
+      <Image
+        src="/Ellipse-1.png" // Replace with your logo icon path
+        alt="DIAG Logo"
+        width={28}
+        height={28}
+        className="opacity-100"
+      />
       <span
         style={{
-          fontFamily: "Inter, sans-serif",
-          fontWeight: 700,
+          fontFamily: "Montserrat, sans-serif",
+          fontWeight: 500,
           fontSize: "1rem",
           color: "#1f2937",
           letterSpacing: "0.08em",
@@ -134,17 +136,24 @@ function StepSidebar({ currentStep }) {
       <div style={{ marginBottom: "24px" }}>
         <h1
           style={{
-            fontFamily: "Inter, sans-serif",
-            fontWeight: 700,
-            fontSize: "clamp(1.5rem, 3vw, 2rem)",
-            color: "#111827",
+            fontFamily: "Montserrat, sans-serif",
+            fontWeight: 500,
+            fontSize: "32px",
+            color: "#3A3A3AE5",
             lineHeight: 1.25,
             marginBottom: "10px",
           }}
         >
           Let's get you set up in just 4 steps
         </h1>
-        <p style={{ color: "#9ca3af", fontSize: "0.875rem", lineHeight: 1.6 }}>
+        <p
+          style={{
+            color: "#3A3A3ACC",
+            fontWeight: 400,
+            fontSize: "0.875rem",
+            lineHeight: 1.6,
+          }}
+        >
           We'll keep it short and simple — just what we need to personalize your
           experience.
         </p>
@@ -168,13 +177,34 @@ function StepSidebar({ currentStep }) {
               />
               {idx < STEPS.length - 1 && (
                 <div
-                  style={{
-                    width: 28,
-                    height: 2,
-                    backgroundColor: isCompleted ? "#4f46e5" : "#e5e7eb",
-                    transition: "background-color 0.3s ease",
-                  }}
-                />
+                  style={{ display: "flex", alignItems: "center", gap: "3px" }}
+                >
+                  {/* left gap */}
+                  <div
+                    style={{
+                      width: 6,
+                      height: 2,
+                      backgroundColor: "transparent",
+                    }}
+                  />
+                  {/* solid short segment */}
+                  <div
+                    style={{
+                      width: 16,
+                      height: 2,
+                      backgroundColor: isCompleted ? "#4f46e5" : "#e5e7eb",
+                      transition: "background-color 0.3s ease",
+                    }}
+                  />
+                  {/* right gap */}
+                  <div
+                    style={{
+                      width: 6,
+                      height: 2,
+                      backgroundColor: "transparent",
+                    }}
+                  />
+                </div>
               )}
             </div>
           );
@@ -211,7 +241,7 @@ function StepSidebar({ currentStep }) {
                 <span
                   style={{
                     fontSize: "0.875rem",
-                    fontWeight: isActive ? 600 : 400,
+                    fontWeight: isActive ? 600 : 500,
                     color: isActive || isCompleted ? "#4f46e5" : "#9ca3af",
                     transition: "all 0.3s ease",
                   }}
@@ -222,13 +252,36 @@ function StepSidebar({ currentStep }) {
               {!isLast && (
                 <div
                   style={{
-                    width: 1,
-                    height: 28,
-                    marginLeft: 17,
-                    backgroundColor: isCompleted ? "#4f46e5" : "#e5e7eb",
-                    transition: "background-color 0.3s ease",
+                    display: "flex",
+                    justifyContent: "flex-start",
                   }}
-                />
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      marginLeft: 18, // aligns with circle center
+                    }}
+                  >
+                    {/* space below circle */}
+                    <div style={{ height: 6 }} />
+
+                    {/* line */}
+                    <div
+                      style={{
+                        width: 1,
+                        height: 20,
+                        backgroundColor: isCompleted ? "#4f46e5" : "#e5e7eb",
+                        borderRadius: 1,
+                        transition: "background-color 0.3s ease",
+                      }}
+                    />
+
+                    {/* space above next circle */}
+                    <div style={{ height: 6 }} />
+                  </div>
+                </div>
               )}
             </div>
           );
@@ -257,7 +310,7 @@ function Input({
             display: "block",
             fontSize: "0.875rem",
             fontWeight: 500,
-            color: "#374151",
+            color: "#3A3A3ACC",
             marginBottom: "8px",
           }}
         >
@@ -355,7 +408,7 @@ function StepHeader({ onBack, backLabel, step }) {
             padding: 0,
           }}
         >
-          <IconChevronLeft size={16} stroke={2} />
+          <IconChevronLeft size={40} stroke={2} />
           {backLabel || "Back"}
         </button>
       ) : (
@@ -401,10 +454,42 @@ function Step1({ onNext, formData, setFormData }) {
   const [showPw, setShowPw] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+
+  const validate = (fields) => {
+    const e = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!fields.email) e.email = "Email is required";
+    else if (!emailRegex.test(fields.email))
+      e.email = "Enter a valid email address";
+    if (!fields.password) e.password = "Password is required";
+    else if (fields.password.length < 8)
+      e.password = "Password must be at least 8 characters";
+    if (!fields.confirmPassword)
+      e.confirmPassword = "Please confirm your password";
+    else if (fields.password !== fields.confirmPassword)
+      e.confirmPassword = "Passwords do not match";
+    return e;
+  };
+
+  const handleBlur = (field) => {
+    setTouched((t) => ({ ...t, [field]: true }));
+    setErrors(validate(formData));
+  };
+
+  const handleChange = (field, value) => {
+    const updated = { ...formData, [field]: value };
+    setFormData((f) => ({ ...f, [field]: value }));
+    if (touched[field]) setErrors(validate(updated));
+  };
 
   const handleSubmit = async () => {
-    setError("");
+    const allTouched = { email: true, password: true, confirmPassword: true };
+    setTouched(allTouched);
+    const e = validate(formData);
+    setErrors(e);
+    if (Object.keys(e).length > 0) return;
     setLoading(true);
     try {
       const res = await fetch("/api/register", {
@@ -418,18 +503,31 @@ function Step1({ onNext, formData, setFormData }) {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error);
+        setErrors({ api: data.error });
         return;
       }
-      // Store devCode from DB response for display on verify screen
       if (data.devCode) setFormData((f) => ({ ...f, devCode: data.devCode }));
       onNext();
     } catch {
-      setError("Network error. Please try again.");
+      setErrors({ api: "Network error. Please try again." });
     } finally {
       setLoading(false);
     }
   };
+
+  const fieldStyle = (field) => ({
+    width: "100%",
+    padding: "12px 16px",
+    paddingRight:
+      field === "password" || field === "confirmPassword" ? "48px" : "16px",
+    border: `1.5px solid ${touched[field] && errors[field] ? "#ef4444" : "#e5e7eb"}`,
+    borderRadius: "8px",
+    fontSize: "0.875rem",
+    color: "#374151",
+    backgroundColor: "white",
+    outline: "none",
+    transition: "border-color 0.2s",
+  });
 
   return (
     <div>
@@ -437,8 +535,9 @@ function Step1({ onNext, formData, setFormData }) {
       <h2 className="step-heading">Let's start with the basics</h2>
       <p
         style={{
-          color: "#6b7280",
+          color: "#3A3A3ACC",
           fontSize: "0.875rem",
+          fontWeight: 400,
           lineHeight: 1.6,
           marginBottom: "28px",
         }}
@@ -446,36 +545,144 @@ function Step1({ onNext, formData, setFormData }) {
         Enter your email and set a secure password. This helps us keep your
         account safe and ready for future logins.
       </p>
-      <ErrorMsg message={error} />
-      <Input
-        label="Email address"
-        type="email"
-        placeholder="Your email address"
-        value={formData.email}
-        onChange={(e) => setFormData((f) => ({ ...f, email: e.target.value }))}
-      />
-      <Input
-        label="Create password"
-        placeholder="Min. 8 characters"
-        value={formData.password}
-        onChange={(e) =>
-          setFormData((f) => ({ ...f, password: e.target.value }))
-        }
-        showToggle
-        showPassword={showPw}
-        onToggle={() => setShowPw((p) => !p)}
-      />
-      <Input
-        label="Confirm password"
-        placeholder="Confirm your password"
-        value={formData.confirmPassword}
-        onChange={(e) =>
-          setFormData((f) => ({ ...f, confirmPassword: e.target.value }))
-        }
-        showToggle
-        showPassword={showConfirm}
-        onToggle={() => setShowConfirm((p) => !p)}
-      />
+
+      {errors.api && <ErrorMsg message={errors.api} />}
+
+      {/* Email */}
+      <div style={{ marginBottom: "20px" }}>
+        <label
+          style={{
+            display: "block",
+            fontSize: "0.875rem",
+            fontWeight: 500,
+            color: "#374151",
+            marginBottom: "8px",
+          }}
+        >
+          Email address
+        </label>
+        <input
+          type="email"
+          placeholder="Your email address"
+          value={formData.email}
+          onChange={(e) => handleChange("email", e.target.value)}
+          onBlur={() => handleBlur("email")}
+          onFocus={(e) => (e.target.style.borderColor = "#4f46e5")}
+          style={fieldStyle("email")}
+        />
+        {touched.email && errors.email && (
+          <p
+            style={{ color: "#ef4444", fontSize: "0.75rem", marginTop: "4px" }}
+          >
+            {errors.email}
+          </p>
+        )}
+      </div>
+
+      {/* Password */}
+      <div style={{ marginBottom: "20px" }}>
+        <label
+          style={{
+            display: "block",
+            fontSize: "0.875rem",
+            fontWeight: 500,
+            color: "#374151",
+            marginBottom: "8px",
+          }}
+        >
+          Create password
+        </label>
+        <div style={{ position: "relative" }}>
+          <input
+            type={showPw ? "text" : "password"}
+            placeholder="Min. 8 characters"
+            value={formData.password}
+            onChange={(e) => handleChange("password", e.target.value)}
+            onBlur={() => handleBlur("password")}
+            onFocus={(e) => (e.target.style.borderColor = "#4f46e5")}
+            style={fieldStyle("password")}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPw((p) => !p)}
+            style={{
+              position: "absolute",
+              right: 14,
+              top: "50%",
+              transform: "translateY(-50%)",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              color: "#9ca3af",
+              display: "flex",
+              alignItems: "center",
+              padding: 0,
+            }}
+          >
+            {showPw ? <IconEyeOff size={20} /> : <IconEye size={20} />}
+          </button>
+        </div>
+        {touched.password && errors.password && (
+          <p
+            style={{ color: "#ef4444", fontSize: "0.75rem", marginTop: "4px" }}
+          >
+            {errors.password}
+          </p>
+        )}
+      </div>
+
+      {/* Confirm Password */}
+      <div style={{ marginBottom: "20px" }}>
+        <label
+          style={{
+            display: "block",
+            fontSize: "0.875rem",
+            fontWeight: 500,
+            color: "#374151",
+            marginBottom: "8px",
+          }}
+        >
+          Confirm password
+        </label>
+        <div style={{ position: "relative" }}>
+          <input
+            type={showConfirm ? "text" : "password"}
+            placeholder="Confirm your password"
+            value={formData.confirmPassword}
+            onChange={(e) => handleChange("confirmPassword", e.target.value)}
+            onBlur={() => handleBlur("confirmPassword")}
+            onFocus={(e) => (e.target.style.borderColor = "#4f46e5")}
+            style={fieldStyle("confirmPassword")}
+          />
+          <button
+            type="button"
+            onClick={() => setShowConfirm((p) => !p)}
+            style={{
+              position: "absolute",
+              right: 14,
+              top: "50%",
+              transform: "translateY(-50%)",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              color: "#9ca3af",
+              display: "flex",
+              alignItems: "center",
+              padding: 0,
+            }}
+          >
+            {showConfirm ? <IconEyeOff size={20} /> : <IconEye size={20} />}
+          </button>
+        </div>
+        {touched.confirmPassword && errors.confirmPassword && (
+          <p
+            style={{ color: "#ef4444", fontSize: "0.75rem", marginTop: "4px" }}
+          >
+            {errors.confirmPassword}
+          </p>
+        )}
+      </div>
+
       <PrimaryButton onClick={handleSubmit} loading={loading}>
         Create Account
       </PrimaryButton>
@@ -541,7 +748,7 @@ function Step1({ onNext, formData, setFormData }) {
           color: "#374151",
         }}
       >
-        <IconBrandGoogle size={18} color="#EA4335" />
+        <Image src="/google-png.png" alt="Google Logo" width={20} height={20} />
         Continue with Google
       </button>
     </div>
@@ -616,7 +823,8 @@ function Step1Verify({ onNext, onBack, formData, setFormData }) {
       <h2 className="step-heading">Verify Email address</h2>
       <p
         style={{
-          color: "#6b7280",
+          color: "#3A3A3ACC",
+          fontWeight: 400,
           fontSize: "0.875rem",
           lineHeight: 1.6,
           marginBottom: "8px",
@@ -634,7 +842,7 @@ function Step1Verify({ onNext, onBack, formData, setFormData }) {
             borderRadius: "6px",
             marginBottom: "18px",
             fontSize: "0.8rem",
-            color: "#1d4ed8",
+            color: "#4F46E5",
           }}
         >
           <strong>Demo code:</strong> {formData.devCode}
@@ -697,26 +905,39 @@ function Step1Verify({ onNext, onBack, formData, setFormData }) {
 /* ─── Step 2: Tell Us About You ─────────────────────────────────────────────── */
 function Step2({ onNext, formData, setFormData }) {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const teamOptions = [
-    "Just me",
-    "2–10 teammates",
-    "11–50 teammates",
-    "50+ teammates",
-  ];
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+
+  const validate = (fields) => {
+    const e = {};
+    if (!fields.name || !fields.name.trim()) e.name = "Your name is required";
+    if (!fields.role || !fields.role.trim()) e.role = "Your role is required";
+    if (!fields.teamSize) e.teamSize = "Please select a team size";
+    return e;
+  };
+
+  const handleBlur = (field) => {
+    setTouched((t) => ({ ...t, [field]: true }));
+    setErrors(validate(formData));
+  };
+
+  const handleChange = (field, value) => {
+    const updated = { ...formData, [field]: value };
+    setFormData((f) => ({ ...f, [field]: value }));
+    if (touched[field]) setErrors(validate(updated));
+  };
 
   const handleSubmit = async () => {
-    if (!formData.name || !formData.role || !formData.teamSize) {
-      setError("Please fill in all fields");
-      return;
-    }
-    setError("");
+    const allTouched = { name: true, role: true, teamSize: true };
+    setTouched(allTouched);
+    const e = validate(formData);
+    setErrors(e);
+    if (Object.keys(e).length > 0) return;
     setLoading(true);
     try {
       const res = await fetch("/api/onboarding", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // ✅ sessionToken lets API find the user in MongoDB
         body: JSON.stringify({
           sessionToken: formData.sessionToken,
           name: formData.name,
@@ -726,17 +947,24 @@ function Step2({ onNext, formData, setFormData }) {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error);
+        setErrors({ api: data.error });
         return;
       }
       setFormData((f) => ({ ...f, user: data.user }));
       onNext();
     } catch {
-      setError("Network error.");
+      setErrors({ api: "Network error." });
     } finally {
       setLoading(false);
     }
   };
+
+  const teamOptions = [
+    "Just me",
+    "2–10 teammates",
+    "11–50 teammates",
+    "50+ teammates",
+  ];
 
   return (
     <div>
@@ -744,28 +972,99 @@ function Step2({ onNext, formData, setFormData }) {
       <h2 className="step-heading">Who's joining us?</h2>
       <p
         style={{
-          color: "#6b7280",
+          color: "#3A3A3ACC",
+          fontWeight: 400,
           fontSize: "0.875rem",
           lineHeight: 1.6,
           marginBottom: "28px",
         }}
       >
         We'd love to know your name and role so we can tailor the experience to
-        how you work best , whether you're solo or with a team.
+        how you work best, whether you're a solo creator or part of a larger
+        team.
       </p>
-      <ErrorMsg message={error} />
-      <Input
-        label="What should we call you?"
-        placeholder="eg., Orimadegun Promise"
-        value={formData.name || ""}
-        onChange={(e) => setFormData((f) => ({ ...f, name: e.target.value }))}
-      />
-      <Input
-        label="What's your role?"
-        placeholder="eg., Product designer"
-        value={formData.role || ""}
-        onChange={(e) => setFormData((f) => ({ ...f, role: e.target.value }))}
-      />
+
+      {errors.api && <ErrorMsg message={errors.api} />}
+
+      {/* Name */}
+      <div style={{ marginBottom: "20px" }}>
+        <label
+          style={{
+            display: "block",
+            fontSize: "0.875rem",
+            fontWeight: 500,
+            color: "#374151",
+            marginBottom: "8px",
+          }}
+        >
+          What should we call you?
+        </label>
+        <input
+          type="text"
+          placeholder="eg., Orimadegun Promise"
+          value={formData.name || ""}
+          onChange={(e) => handleChange("name", e.target.value)}
+          onBlur={() => handleBlur("name")}
+          style={{
+            width: "100%",
+            padding: "12px 16px",
+            border: `1.5px solid ${touched.name && errors.name ? "#ef4444" : "#e5e7eb"}`,
+            borderRadius: "8px",
+            fontSize: "0.875rem",
+            color: "#374151",
+            outline: "none",
+          }}
+          onFocus={(e) => (e.target.style.borderColor = "#4f46e5")}
+        />
+        {touched.name && errors.name && (
+          <p
+            style={{ color: "#ef4444", fontSize: "0.75rem", marginTop: "4px" }}
+          >
+            {errors.name}
+          </p>
+        )}
+      </div>
+
+      {/* Role */}
+      <div style={{ marginBottom: "20px" }}>
+        <label
+          style={{
+            display: "block",
+            fontSize: "0.875rem",
+            fontWeight: 500,
+            color: "#374151",
+            marginBottom: "8px",
+          }}
+        >
+          What's your role?
+        </label>
+        <input
+          type="text"
+          placeholder="eg., Product designer"
+          value={formData.role || ""}
+          onChange={(e) => handleChange("role", e.target.value)}
+          onBlur={() => handleBlur("role")}
+          style={{
+            width: "100%",
+            padding: "12px 16px",
+            border: `1.5px solid ${touched.role && errors.role ? "#ef4444" : "#e5e7eb"}`,
+            borderRadius: "8px",
+            fontSize: "0.875rem",
+            color: "#374151",
+            outline: "none",
+          }}
+          onFocus={(e) => (e.target.style.borderColor = "#4f46e5")}
+        />
+        {touched.role && errors.role && (
+          <p
+            style={{ color: "#ef4444", fontSize: "0.75rem", marginTop: "4px" }}
+          >
+            {errors.role}
+          </p>
+        )}
+      </div>
+
+      {/* Team size */}
       <div style={{ marginBottom: "28px" }}>
         <label
           style={{
@@ -802,7 +1101,10 @@ function Step2({ onNext, formData, setFormData }) {
                   name="teamSize"
                   value={opt}
                   checked={formData.teamSize === opt}
-                  onChange={() => setFormData((f) => ({ ...f, teamSize: opt }))}
+                  onChange={() => {
+                    handleChange("teamSize", opt);
+                    setTouched((t) => ({ ...t, teamSize: true }));
+                  }}
                   style={{
                     opacity: 0,
                     position: "absolute",
@@ -841,7 +1143,15 @@ function Step2({ onNext, formData, setFormData }) {
             </label>
           ))}
         </div>
+        {touched.teamSize && errors.teamSize && (
+          <p
+            style={{ color: "#ef4444", fontSize: "0.75rem", marginTop: "8px" }}
+          >
+            {errors.teamSize}
+          </p>
+        )}
       </div>
+
       <PrimaryButton onClick={handleSubmit} loading={loading}>
         Continue
       </PrimaryButton>
@@ -852,14 +1162,34 @@ function Step2({ onNext, formData, setFormData }) {
 /* ─── Step 3a: Create Workspace ─────────────────────────────────────────────── */
 function Step3Workspace({ onNext, onBack, formData, setFormData }) {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+
+  const validate = (fields) => {
+    const e = {};
+    if (!fields.workspaceName || !fields.workspaceName.trim())
+      e.workspaceName = "Workspace name is required";
+    else if (fields.workspaceName.trim().length < 2)
+      e.workspaceName = "Workspace name must be at least 2 characters";
+    return e;
+  };
+
+  const handleBlur = () => {
+    setTouched((t) => ({ ...t, workspaceName: true }));
+    setErrors(validate(formData));
+  };
+
+  const handleChange = (value) => {
+    const updated = { ...formData, workspaceName: value };
+    setFormData((f) => ({ ...f, workspaceName: value }));
+    if (touched.workspaceName) setErrors(validate(updated));
+  };
 
   const handleSubmit = async () => {
-    if (!formData.workspaceName) {
-      setError("Please enter a workspace name");
-      return;
-    }
-    setError("");
+    setTouched({ workspaceName: true });
+    const e = validate(formData);
+    setErrors(e);
+    if (Object.keys(e).length > 0) return;
     setLoading(true);
     try {
       const res = await fetch("/api/workspace", {
@@ -872,7 +1202,7 @@ function Step3Workspace({ onNext, onBack, formData, setFormData }) {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error);
+        setErrors({ api: data.error });
         return;
       }
       setFormData((f) => ({
@@ -882,7 +1212,7 @@ function Step3Workspace({ onNext, onBack, formData, setFormData }) {
       }));
       onNext();
     } catch {
-      setError("Network error.");
+      setErrors({ api: "Network error." });
     } finally {
       setLoading(false);
     }
@@ -894,24 +1224,57 @@ function Step3Workspace({ onNext, onBack, formData, setFormData }) {
       <h2 className="step-heading">Create your workspace</h2>
       <p
         style={{
-          color: "#6b7280",
+          color: "#3A3A3ACC",
           fontSize: "0.875rem",
+          fontWeight: 400,
           lineHeight: 1.6,
           marginBottom: "28px",
         }}
       >
         Name your workspace and invite teammates (if you'd like). You can always
-        add more later , we'll keep things flexible.
+        add more later.
       </p>
-      <ErrorMsg message={error} />
-      <Input
-        label="What's the name of your workspace?"
-        placeholder="eg., Nexa team"
-        value={formData.workspaceName || ""}
-        onChange={(e) =>
-          setFormData((f) => ({ ...f, workspaceName: e.target.value }))
-        }
-      />
+
+      {errors.api && <ErrorMsg message={errors.api} />}
+
+      <div style={{ marginBottom: "20px" }}>
+        <label
+          style={{
+            display: "block",
+            fontSize: "0.875rem",
+            fontWeight: 500,
+            color: "#374151",
+            marginBottom: "8px",
+          }}
+        >
+          What's the name of your workspace?
+        </label>
+        <input
+          type="text"
+          placeholder="eg., Nexa team"
+          value={formData.workspaceName || ""}
+          onChange={(e) => handleChange(e.target.value)}
+          onBlur={handleBlur}
+          style={{
+            width: "100%",
+            padding: "12px 16px",
+            border: `1.5px solid ${touched.workspaceName && errors.workspaceName ? "#ef4444" : "#e5e7eb"}`,
+            borderRadius: "8px",
+            fontSize: "0.875rem",
+            color: "#374151",
+            outline: "none",
+          }}
+          onFocus={(e) => (e.target.style.borderColor = "#4f46e5")}
+        />
+        {touched.workspaceName && errors.workspaceName && (
+          <p
+            style={{ color: "#ef4444", fontSize: "0.75rem", marginTop: "4px" }}
+          >
+            {errors.workspaceName}
+          </p>
+        )}
+      </div>
+
       <PrimaryButton onClick={handleSubmit} loading={loading}>
         Continue
       </PrimaryButton>
@@ -923,14 +1286,44 @@ function Step3Workspace({ onNext, onBack, formData, setFormData }) {
 function Step3Invite({ onNext, onBack, formData }) {
   const [inviteInput, setInviteInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const validate = (value) => {
+    const e = {};
+    if (value.trim()) {
+      const emails = value
+        .split(",")
+        .map((e) => e.trim())
+        .filter(Boolean);
+      const invalid = emails.filter((e) => !emailRegex.test(e));
+      if (invalid.length > 0)
+        e.emails = `Invalid email${invalid.length > 1 ? "s" : ""}: ${invalid.join(", ")}`;
+    }
+    return e;
+  };
+
+  const handleChange = (value) => {
+    setInviteInput(value);
+    if (touched.emails) setErrors(validate(value));
+  };
+
+  const handleBlur = () => {
+    setTouched((t) => ({ ...t, emails: true }));
+    setErrors(validate(inviteInput));
+  };
 
   const handleContinue = async () => {
+    setTouched({ emails: true });
+    const e = validate(inviteInput);
+    setErrors(e);
+    if (Object.keys(e).length > 0) return;
     const emails = inviteInput
       .split(",")
       .map((e) => e.trim())
       .filter(Boolean);
-    setError("");
     setLoading(true);
     try {
       const res = await fetch("/api/invite", {
@@ -940,12 +1333,12 @@ function Step3Invite({ onNext, onBack, formData }) {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error);
+        setErrors({ api: data.error });
         return;
       }
       onNext();
     } catch {
-      setError("Network error.");
+      setErrors({ api: "Network error." });
     } finally {
       setLoading(false);
     }
@@ -957,7 +1350,8 @@ function Step3Invite({ onNext, onBack, formData }) {
       <h2 className="step-heading">Invite teammates by email</h2>
       <p
         style={{
-          color: "#6b7280",
+          color: "#3A3A3ACC",
+          fontWeight: 400,
           fontSize: "0.875rem",
           lineHeight: 1.6,
           marginBottom: "28px",
@@ -966,17 +1360,52 @@ function Step3Invite({ onNext, onBack, formData }) {
         Add their email addresses so they can join your workspace right away.
         You can skip this and invite them later.
       </p>
-      <ErrorMsg message={error} />
-      <Input
-        label="Enter Email Address"
-        placeholder="eg., Adebanjo@gmail.com"
-        value={inviteInput}
-        onChange={(e) => setInviteInput(e.target.value)}
-      />
+
+      {errors.api && <ErrorMsg message={errors.api} />}
+
+      <div style={{ marginBottom: "8px" }}>
+        <label
+          style={{
+            display: "block",
+            fontSize: "0.875rem",
+            fontWeight: 500,
+            color: "#374151",
+            marginBottom: "8px",
+          }}
+        >
+          Enter Email Address
+        </label>
+        <input
+          type="text"
+          placeholder="eg., Adebanjo@gmail.com, Promise@gmail.com"
+          value={inviteInput}
+          onChange={(e) => handleChange(e.target.value)}
+          onBlur={handleBlur}
+          style={{
+            width: "100%",
+            padding: "12px 16px",
+            border: `1.5px solid ${touched.emails && errors.emails ? "#ef4444" : "#e5e7eb"}`,
+            borderRadius: "8px",
+            fontSize: "0.875rem",
+            color: "#374151",
+            outline: "none",
+          }}
+          onFocus={(e) => (e.target.style.borderColor = "#4f46e5")}
+        />
+        {touched.emails && errors.emails && (
+          <p
+            style={{ color: "#ef4444", fontSize: "0.75rem", marginTop: "4px" }}
+          >
+            {errors.emails}
+          </p>
+        )}
+      </div>
+
       <div
         style={{
           padding: "14px 16px",
           backgroundColor: "#f9fafb",
+          border: "1px solid #e5e7eb",
           borderRadius: "8px",
           marginBottom: "28px",
         }}
@@ -989,7 +1418,7 @@ function Step3Invite({ onNext, onBack, formData }) {
             marginBottom: "10px",
           }}
         >
-          <IconInfoCircle size={16} color="#6b7280" />
+          <IconInfoCircle size={16} color="#4F46E5" />
           <span
             style={{ fontSize: "0.8rem", fontWeight: 600, color: "#6b7280" }}
           >
@@ -1006,14 +1435,16 @@ function Step3Invite({ onNext, onBack, formData }) {
             key={i}
             style={{
               fontSize: "0.8rem",
-              color: "#6b7280",
-              marginBottom: "5px",
+              color: "#3A3A3ACC",
+              fontWeight: 400,
+              marginBottom: "8px",
             }}
           >
             {i + 1}. {tip}
           </p>
         ))}
       </div>
+
       <div className="step-footer">
         <button
           onClick={onNext}
@@ -1086,11 +1517,11 @@ const FOCUS_OPTIONS = [
 
 function Step4({ onBack, formData, setFormData }) {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
   const router = useRouter();
 
   const goToDashboard = (user) => {
-    // ✅ Save session + user to localStorage so dashboard can fetch from MongoDB
     if (typeof window !== "undefined") {
       localStorage.setItem("diag_session", formData.sessionToken);
       if (user) localStorage.setItem("diag_user", JSON.stringify(user));
@@ -1098,12 +1529,18 @@ function Step4({ onBack, formData, setFormData }) {
     router.push("/dashboard");
   };
 
+  const handleSelect = (id) => {
+    setFormData((f) => ({ ...f, focus: id }));
+    if (submitted) setErrors({});
+  };
+
   const handleSubmit = async () => {
+    setSubmitted(true);
     if (!formData.focus) {
-      setError("Please select a focus area");
+      setErrors({ focus: "Please select a focus area to continue" });
       return;
     }
-    setError("");
+    setErrors({});
     setLoading(true);
     try {
       const res = await fetch("/api/focus", {
@@ -1116,16 +1553,49 @@ function Step4({ onBack, formData, setFormData }) {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error);
+        setErrors({ api: data.error });
         return;
       }
       goToDashboard(data.user);
     } catch {
-      setError("Network error.");
+      setErrors({ api: "Network error." });
     } finally {
       setLoading(false);
     }
   };
+
+  const FOCUS_OPTIONS = [
+    {
+      id: "projects",
+      icon: "📝",
+      title: "Manage projects or tasks",
+      desc: "Plan, track, and complete work efficiently.",
+    },
+    {
+      id: "collaborate",
+      icon: "💬",
+      title: "Collaborate with my team",
+      desc: "Share updates, files, and feedback all in one place.",
+    },
+    {
+      id: "kpis",
+      icon: "📈",
+      title: "Track performance or KPIs",
+      desc: "Build dashboards to monitor growth and goals",
+    },
+    {
+      id: "workflows",
+      icon: "🔧",
+      title: "Design workflows or systems",
+      desc: "Create reusable templates and internal tools",
+    },
+    {
+      id: "explore",
+      icon: "👀",
+      title: "Just exploring for now",
+      desc: "Show me around, I'll decide later",
+    },
+  ];
 
   return (
     <div>
@@ -1133,24 +1603,27 @@ function Step4({ onBack, formData, setFormData }) {
       <h2 className="step-heading">What do you want to achieve?</h2>
       <p
         style={{
-          color: "#6b7280",
+          color: "#3A3A3ACC",
           fontSize: "0.875rem",
+          fontWeight: 400,
           lineHeight: 1.6,
           marginBottom: "24px",
         }}
       >
         Choose a use case so we can recommend the right tools and templates to
-        get you started faster. You can always change this later.
+        get you started faster.
       </p>
-      <ErrorMsg message={error} />
+
+      {errors.api && <ErrorMsg message={errors.api} />}
+
       <div className="focus-grid">
         {FOCUS_OPTIONS.map((opt) => (
           <div
             key={opt.id}
-            onClick={() => setFormData((f) => ({ ...f, focus: opt.id }))}
+            onClick={() => handleSelect(opt.id)}
             style={{
               padding: "14px",
-              border: `1.5px solid ${formData.focus === opt.id ? "#4f46e5" : "#e5e7eb"}`,
+              border: `1.5px solid ${formData.focus === opt.id ? "#4f46e5" : submitted && !formData.focus ? "#ef4444" : "#e5e7eb"}`,
               borderRadius: "8px",
               cursor: "pointer",
               backgroundColor: formData.focus === opt.id ? "#eef2ff" : "white",
@@ -1185,6 +1658,18 @@ function Step4({ onBack, formData, setFormData }) {
           </div>
         ))}
       </div>
+      {errors.focus && (
+        <p
+          style={{
+            color: "#ef4444",
+            fontSize: "0.75rem",
+            marginBottom: "12px",
+          }}
+        >
+          {errors.focus}
+        </p>
+      )}
+
       <div className="step-footer">
         <button
           onClick={() => goToDashboard(formData.user)}

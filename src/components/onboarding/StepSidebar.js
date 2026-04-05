@@ -16,7 +16,7 @@ export default function StepSidebar() {
     <div className="w-full md:w-96 flex-shrink-0 px-8 py-10">
       <h1
         className="text-3xl font-semibold text-gray-800 leading-tight mb-3"
-        style={{ fontFamily: "DM Sans, sans-serif" }}
+        style={{ fontFamily: "Montserrat, sans-serif" }}
       >
         Let's get you set up in just 4 steps
       </h1>

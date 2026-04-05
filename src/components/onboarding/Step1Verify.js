@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useOnboarding } from "@/context/OnboardingContext";
+import Image from "next/image";
 
 export default function Step1Verify() {
   const { data, setSubStep, nextStep } = useOnboarding();
@@ -64,16 +65,13 @@ export default function Step1Verify() {
           onClick={() => setSubStep("create")}
           className="flex items-center gap-1 text-sm text-gray-400 hover:text-gray-600 transition-colors"
         >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
+          <Image
+            src="/Vector.png" // Replace with your logo icon path
+            alt="DIAG Logo"
+            width={40}
+            height={40}
+            className="opacity-100"
+          />
           Back
         </button>
         <span className="text-sm text-gray-400">1/4</span>
@@ -81,7 +79,7 @@ export default function Step1Verify() {
 
       <h2
         className="text-3xl font-semibold text-gray-800 mb-2"
-        style={{ fontFamily: "DM Sans, sans-serif" }}
+        style={{ fontFamily: "Montserrat, sans-serif" }}
       >
         Verify Email addresss
       </h2>

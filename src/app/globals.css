@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -9,7 +9,7 @@
 }
 
 body {
-  font-family: "Inter", sans-serif;
+  font-family: "Montserrat", sans-serif;
   background-color: #f0f2f5;
   color: #1a1a2e;
 }
@@ -23,4 +23,16 @@ input:focus {
   height: 32px;
   background-color: #d1d5db;
   margin-left: 18px;
+}
+
+th {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+::placeholder {
+  font-family: "Montserrat", sans-serif;
 }

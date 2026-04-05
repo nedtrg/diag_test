@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { IconEye, IconEyeOff, IconBrandGoogle } from "@tabler/icons-react";
+import { IconEye, IconEyeOff } from "@tabler/icons-react";
+import Image from "next/image";
 
 const LOGIN_CSS = `
   * { box-sizing: border-box; }
@@ -37,15 +38,17 @@ const LOGIN_CSS = `
 function DiagLogo() {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <circle cx="14" cy="14" r="14" fill="#4f46e5" />
-        <path d="M8 14 Q14 6 20 14 Q14 22 8 14Z" fill="white" opacity="0.9" />
-        <circle cx="14" cy="14" r="3" fill="#818cf8" />
-      </svg>
+      <Image
+        src="/Ellipse-1.png" // Replace with your logo icon path
+        alt="DIAG Logo"
+        width={28}
+        height={28}
+        className="opacity-100"
+      />
       <span
         style={{
-          fontFamily: "Inter, sans-serif",
-          fontWeight: 700,
+          fontFamily: "Montserrat, sans-serif",
+          fontWeight: 500,
           fontSize: "1rem",
           color: "#1f2937",
           letterSpacing: "0.08em",
@@ -63,14 +66,36 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+
+  const validate = (fields) => {
+    const e = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!fields.email) e.email = "Email is required";
+    else if (!emailRegex.test(fields.email))
+      e.email = "Enter a valid email address";
+    if (!fields.password) e.password = "Password is required";
+    return e;
+  };
+
+  const handleBlur = (field) => {
+    setTouched((t) => ({ ...t, [field]: true }));
+    setErrors(validate({ email, password }));
+  };
+
+  const handleChange = (field, value) => {
+    const updated = { email, password, [field]: value };
+    if (field === "email") setEmail(value);
+    if (field === "password") setPassword(value);
+    if (touched[field]) setErrors(validate(updated));
+  };
 
   const handleLogin = async () => {
-    if (!email || !password) {
-      setError("Please enter your email and password");
-      return;
-    }
-    setError("");
+    setTouched({ email: true, password: true });
+    const e = validate({ email, password });
+    setErrors(e);
+    if (Object.keys(e).length > 0) return;
     setLoading(true);
     try {
       const res = await fetch("/api/login", {
@@ -80,15 +105,14 @@ export default function LoginPage() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error);
+        setErrors({ api: data.error });
         return;
       }
-
       localStorage.setItem("diag_session", data.sessionToken);
       localStorage.setItem("diag_user", JSON.stringify(data.user));
       router.push("/dashboard");
     } catch {
-      setError("Network error. Please try again.");
+      setErrors({ api: "Network error. Please try again." });
     } finally {
       setLoading(false);
     }
@@ -125,10 +149,10 @@ export default function LoginPage() {
               </div>
               <h1
                 style={{
-                  fontFamily: "Inter, sans-serif",
+                  fontFamily: "Montserrat, sans-serif",
                   fontWeight: 700,
                   fontSize: "1.6rem",
-                  color: "#111827",
+                  color: "#3A3A3AE5",
                   marginBottom: "8px",
                 }}
               >
@@ -139,7 +163,8 @@ export default function LoginPage() {
               </p>
             </div>
 
-            {error && (
+            {/* API error */}
+            {errors.api && (
               <div
                 style={{
                   padding: "10px 14px",
@@ -151,11 +176,11 @@ export default function LoginPage() {
                   marginBottom: "20px",
                 }}
               >
-                {error}
+                {errors.api}
               </div>
             )}
 
-            {/* Email field */}
+            {/* Email */}
             <div style={{ marginBottom: "20px" }}>
               <label
                 style={{
@@ -172,12 +197,13 @@ export default function LoginPage() {
                 type="email"
                 placeholder="your@email.com"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => handleChange("email", e.target.value)}
+                onBlur={() => handleBlur("email")}
                 onKeyDown={handleKeyDown}
                 style={{
                   width: "100%",
                   padding: "12px 16px",
-                  border: "1.5px solid #e5e7eb",
+                  border: `1.5px solid ${touched.email && errors.email ? "#ef4444" : "#e5e7eb"}`,
                   borderRadius: "8px",
                   fontSize: "0.875rem",
                   color: "#374151",
@@ -185,11 +211,21 @@ export default function LoginPage() {
                   fontFamily: "Inter, sans-serif",
                 }}
                 onFocus={(e) => (e.target.style.borderColor = "#4f46e5")}
-                onBlur={(e) => (e.target.style.borderColor = "#e5e7eb")}
               />
+              {touched.email && errors.email && (
+                <p
+                  style={{
+                    color: "#ef4444",
+                    fontSize: "0.75rem",
+                    marginTop: "4px",
+                  }}
+                >
+                  {errors.email}
+                </p>
+              )}
             </div>
 
-            {/* Password field */}
+            {/* Password */}
             <div style={{ marginBottom: "12px" }}>
               <label
                 style={{
@@ -207,12 +243,13 @@ export default function LoginPage() {
                   type={showPw ? "text" : "password"}
                   placeholder="Your password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => handleChange("password", e.target.value)}
+                  onBlur={() => handleBlur("password")}
                   onKeyDown={handleKeyDown}
                   style={{
                     width: "100%",
                     padding: "12px 48px 12px 16px",
-                    border: "1.5px solid #e5e7eb",
+                    border: `1.5px solid ${touched.password && errors.password ? "#ef4444" : "#e5e7eb"}`,
                     borderRadius: "8px",
                     fontSize: "0.875rem",
                     color: "#374151",
@@ -220,7 +257,6 @@ export default function LoginPage() {
                     fontFamily: "Inter, sans-serif",
                   }}
                   onFocus={(e) => (e.target.style.borderColor = "#4f46e5")}
-                  onBlur={(e) => (e.target.style.borderColor = "#e5e7eb")}
                 />
                 <button
                   type="button"
@@ -242,6 +278,17 @@ export default function LoginPage() {
                   {showPw ? <IconEyeOff size={20} /> : <IconEye size={20} />}
                 </button>
               </div>
+              {touched.password && errors.password && (
+                <p
+                  style={{
+                    color: "#ef4444",
+                    fontSize: "0.75rem",
+                    marginTop: "4px",
+                  }}
+                >
+                  {errors.password}
+                </p>
+              )}
             </div>
 
             <div style={{ textAlign: "right", marginBottom: "24px" }}>
@@ -322,7 +369,12 @@ export default function LoginPage() {
                 (e.currentTarget.style.backgroundColor = "white")
               }
             >
-              <IconBrandGoogle size={18} color="#EA4335" />
+              <Image
+                src="/google-png.png"
+                alt="Google Logo"
+                width={20}
+                height={20}
+              />
               Continue with Google
             </button>
 
