@@ -62,7 +62,11 @@ const GLOBAL_CSS = `
 /* ─── Logo ──────────────────────────────────────────────────────────────────── */
 function DiagLogo() {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+    <div
+      data-aos="fade-down"
+      data-aos-delay="0"
+      style={{ display: "flex", alignItems: "center", gap: "8px" }}
+    >
       <Image
         src="/Ellipse-1.png" // Replace with your logo icon path
         alt="DIAG Logo"
@@ -133,7 +137,11 @@ function StepCircle({ isCompleted, isActive, number, size = 36 }) {
 function StepSidebar({ currentStep }) {
   return (
     <div className="step-sidebar">
-      <div style={{ marginBottom: "24px" }}>
+      <div
+        data-aos="fade-right"
+        data-aos-delay="100"
+        style={{ marginBottom: "24px" }}
+      >
         <h1
           style={{
             fontFamily: "Montserrat, sans-serif",
@@ -160,7 +168,12 @@ function StepSidebar({ currentStep }) {
       </div>
 
       {/* Mobile: horizontal dots + active label */}
-      <div className="steps-mobile" style={{ gap: "0" }}>
+      <div
+        data-aos="fade-down"
+        data-aos-delay="150"
+        className="steps-mobile"
+        style={{ gap: "0" }}
+      >
         {STEPS.map((step, idx) => {
           const isCompleted = currentStep > step.number;
           const isActive = currentStep === step.number;
@@ -222,7 +235,7 @@ function StepSidebar({ currentStep }) {
       </div>
 
       {/* Desktop: full vertical list */}
-      <div className="steps-desktop">
+      <div data-aos="fade-up" data-aos-delay="150" className="steps-desktop">
         {STEPS.map((step, idx) => {
           const isCompleted = currentStep > step.number;
           const isActive = currentStep === step.number;
@@ -533,8 +546,12 @@ function Step1({ onNext, formData, setFormData }) {
   return (
     <div>
       <StepHeader step={1} />
-      <h2 className="step-heading">Let's start with the basics</h2>
+      <h2 data-aos="fade-left" data-aos-delay="200" className="step-heading">
+        Let's start with the basics
+      </h2>
       <p
+        data-aos="fade-left"
+        data-aos-delay="400"
         style={{
           color: "#3A3A3ACC",
           fontSize: "0.875rem",
@@ -550,7 +567,11 @@ function Step1({ onNext, formData, setFormData }) {
       {errors.api && <ErrorMsg message={errors.api} />}
 
       {/* Email */}
-      <div style={{ marginBottom: "20px" }}>
+      <div
+        data-aos="fade-up"
+        data-aos-delay="200"
+        style={{ marginBottom: "20px" }}
+      >
         <label
           style={{
             display: "block",
@@ -581,7 +602,11 @@ function Step1({ onNext, formData, setFormData }) {
       </div>
 
       {/* Password */}
-      <div style={{ marginBottom: "20px" }}>
+      <div
+        data-aos="fade-up"
+        data-aos-delay="300"
+        style={{ marginBottom: "20px" }}
+      >
         <label
           style={{
             display: "block",
@@ -633,7 +658,11 @@ function Step1({ onNext, formData, setFormData }) {
       </div>
 
       {/* Confirm Password */}
-      <div style={{ marginBottom: "20px" }}>
+      <div
+        data-aos="fade-up"
+        data-aos-delay="400"
+        style={{ marginBottom: "20px" }}
+      >
         <label
           style={{
             display: "block",

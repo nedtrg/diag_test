@@ -37,7 +37,11 @@ const LOGIN_CSS = `
 
 function DiagLogo() {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+    <div
+      data-aos="zoom-in"
+      data-aos-delay="150"
+      style={{ display: "flex", alignItems: "center", gap: "8px" }}
+    >
       <Image
         src="/Ellipse-1.png" // Replace with your logo icon path
         alt="DIAG Logo"
@@ -136,9 +140,11 @@ export default function LoginPage() {
           <DiagLogo />
         </nav>
         <div className="login-body">
-          <div className="login-card">
+          <div data-aos="fade-up" data-aos-delay="100" className="login-card">
             <div style={{ textAlign: "center", marginBottom: "32px" }}>
               <div
+                data-aos="zoom-in"
+                data-aos-delay="150"
                 style={{
                   display: "flex",
                   justifyContent: "center",
@@ -181,7 +187,11 @@ export default function LoginPage() {
             )}
 
             {/* Email */}
-            <div style={{ marginBottom: "20px" }}>
+            <div
+              data-aos="fade-up"
+              data-aos-delay="200"
+              style={{ marginBottom: "20px" }}
+            >
               <label
                 style={{
                   display: "block",
@@ -226,7 +236,11 @@ export default function LoginPage() {
             </div>
 
             {/* Password */}
-            <div style={{ marginBottom: "12px" }}>
+            <div
+              data-aos="fade-up"
+              data-aos-delay="300"
+              style={{ marginBottom: "12px" }}
+            >
               <label
                 style={{
                   display: "block",
@@ -306,6 +320,8 @@ export default function LoginPage() {
             </div>
 
             <button
+              data-aos="fade-up"
+              data-aos-delay="400"
               onClick={handleLogin}
               disabled={loading}
               style={{
@@ -345,6 +361,8 @@ export default function LoginPage() {
             </div>
 
             <button
+              data-aos="fade-up"
+              data-aos-delay="500"
               style={{
                 width: "100%",
                 padding: "12px",

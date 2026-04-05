@@ -119,13 +119,18 @@ const DASH_CSS = `
 /* ─── Logo ───────────────────────────────────────────────────────────────────  */
 function DiagLogo() {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+    <div
+      data-aos="fade-right"
+      data-aos-delay="300"
+      style={{ display: "flex", alignItems: "center", gap: "8px" }}
+    >
       <Image
         src="/Ellipse-1.png" // Replace with your logo icon path
         alt="DIAG Logo"
         width={28}
         height={28}
         className="opacity-100"
+        style={{ width: "28px", height: "auto" }}
       />
       <span
         style={{
@@ -564,6 +569,20 @@ export default function Dashboard() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const aos = (animation, delay = 0) => {
+    if (!mounted) return {};
+    return {
+      "data-aos": animation,
+      "data-aos-delay": String(delay),
+      "data-aos-once": "true",
+    };
+  };
 
   // ── Data fetched from MongoDB via /api/me and /api/stats ──────────────────
   const [dashUser, setDashUser] = useState(null); // user from DB
@@ -665,7 +684,7 @@ export default function Dashboard() {
         {/* ── Navbar ──────────────────────────────────────────────────────── */}
         <nav className="dash-nav">
           <DiagLogo />
-          <div className="nav-search">
+          <div data-aos="fade-left" data-aos-delay="500" className="nav-search">
             <svg
               width="20"
               height="20"
@@ -680,6 +699,8 @@ export default function Dashboard() {
             Search anything...
           </div>
           <div
+            data-aos="fade-right"
+            data-aos-delay="500"
             style={{
               marginLeft: "auto",
               display: "flex",
@@ -702,7 +723,11 @@ export default function Dashboard() {
               />
             </div>
             {/* User menu */}
-            <div style={{ position: "relative" }}>
+            <div
+              data-aos="zoom-in"
+              data-aos-delay="150"
+              style={{ position: "relative" }}
+            >
               <div
                 onClick={() => setShowUserMenu((m) => !m)}
                 style={{
@@ -841,7 +866,11 @@ export default function Dashboard() {
 
         <div className="dash-body">
           {/* ── Desktop Sidebar ──────────────────────────────────────────── */}
-          <aside className="dash-sidebar">
+          <aside
+            data-aos="fade-right"
+            data-aos-delay="150"
+            className="dash-sidebar"
+          >
             <div>
               {NAV_ITEMS.map((item) => {
                 const Icon = item.icon;
@@ -878,7 +907,13 @@ export default function Dashboard() {
               }}
             >
               <div className="trial-icon" style={{ marginBottom: "12px" }}>
-                <Image src="/Vector2.png" alt="Gift" width={32} height={32} />
+                <Image
+                  src="/Vector2.png"
+                  alt="Gift"
+                  width={32}
+                  height={32}
+                  style={{ width: "28px", height: "auto" }}
+                />
               </div>
 
               <p

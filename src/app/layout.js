@@ -1,4 +1,5 @@
 import "./globals.css";
+import AOSInit from "@/components/AOSInit";
 
 export const metadata = {
   title: "DIAG — Get Started",
@@ -8,7 +9,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AOSInit />
+        {children}
+      </body>
     </html>
   );
 }
