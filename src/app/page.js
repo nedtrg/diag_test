@@ -851,8 +851,12 @@ function Step1Verify({ onNext, onBack, formData, setFormData }) {
   return (
     <div>
       <StepHeader onBack={onBack} backLabel="Back" step={1} />
-      <h2 className="step-heading">Verify Email address</h2>
+      <h2 data-aos="fade-right" data-aos-delay="400" className="step-heading">
+        Verify Email address
+      </h2>
       <p
+        data-aos="fade-left"
+        data-aos-delay="600"
         style={{
           color: "#3A3A3ACC",
           fontWeight: 400,
@@ -880,7 +884,7 @@ function Step1Verify({ onNext, onBack, formData, setFormData }) {
         </div>
       )}
       <ErrorMsg message={error} />
-      <div className="otp-row">
+      <div data-aos="fade-up" data-aos-delay="300" className="otp-row">
         {code.map((digit, idx) => (
           <input
             key={idx}
@@ -898,6 +902,8 @@ function Step1Verify({ onNext, onBack, formData, setFormData }) {
         ))}
       </div>
       <div
+        data-aos="fade-up"
+        data-aos-delay="300"
         style={{
           textAlign: "right",
           marginBottom: "28px",
@@ -1000,8 +1006,12 @@ function Step2({ onNext, formData, setFormData }) {
   return (
     <div>
       <StepHeader step={2} />
-      <h2 className="step-heading">Who's joining us?</h2>
+      <h2 data-aos="fade-right" data-aos-delay="400" className="step-heading">
+        Who's joining us?
+      </h2>
       <p
+        data-aos="fade-left"
+        data-aos-delay="600"
         style={{
           color: "#3A3A3ACC",
           fontWeight: 400,
@@ -1018,7 +1028,11 @@ function Step2({ onNext, formData, setFormData }) {
       {errors.api && <ErrorMsg message={errors.api} />}
 
       {/* Name */}
-      <div style={{ marginBottom: "20px" }}>
+      <div
+        data-aos="fade-up"
+        data-aos-delay="400"
+        style={{ marginBottom: "20px" }}
+      >
         <label
           style={{
             display: "block",
@@ -1057,7 +1071,11 @@ function Step2({ onNext, formData, setFormData }) {
       </div>
 
       {/* Role */}
-      <div style={{ marginBottom: "20px" }}>
+      <div
+        data-aos="fade-up"
+        data-aos-delay="500"
+        style={{ marginBottom: "20px" }}
+      >
         <label
           style={{
             display: "block",
@@ -1096,7 +1114,11 @@ function Step2({ onNext, formData, setFormData }) {
       </div>
 
       {/* Team size */}
-      <div style={{ marginBottom: "28px" }}>
+      <div
+        data-aos="fade-up"
+        data-aos-delay="600"
+        style={{ marginBottom: "28px" }}
+      >
         <label
           style={{
             display: "block",
@@ -1252,8 +1274,12 @@ function Step3Workspace({ onNext, onBack, formData, setFormData }) {
   return (
     <div>
       <StepHeader onBack={onBack} backLabel="Tell us about you" step={3} />
-      <h2 className="step-heading">Create your workspace</h2>
+      <h2 data-aos="fade-right" data-aos-delay="400" className="step-heading">
+        Create your workspace
+      </h2>
       <p
+        data-aos="fade-left"
+        data-aos-delay="600"
         style={{
           color: "#3A3A3ACC",
           fontSize: "0.875rem",
@@ -1268,7 +1294,11 @@ function Step3Workspace({ onNext, onBack, formData, setFormData }) {
 
       {errors.api && <ErrorMsg message={errors.api} />}
 
-      <div style={{ marginBottom: "20px" }}>
+      <div
+        data-aos="fade-up"
+        data-aos-delay="300"
+        style={{ marginBottom: "20px" }}
+      >
         <label
           style={{
             display: "block",
@@ -1378,8 +1408,12 @@ function Step3Invite({ onNext, onBack, formData }) {
   return (
     <div>
       <StepHeader onBack={onBack} backLabel="Back" step={3} />
-      <h2 className="step-heading">Invite teammates by email</h2>
+      <h2 data-aos="fade-right" data-aos-delay="400" className="step-heading">
+        Invite teammates by email
+      </h2>
       <p
+        data-aos="fade-left"
+        data-aos-delay="600"
         style={{
           color: "#3A3A3ACC",
           fontWeight: 400,
@@ -1394,7 +1428,11 @@ function Step3Invite({ onNext, onBack, formData }) {
 
       {errors.api && <ErrorMsg message={errors.api} />}
 
-      <div style={{ marginBottom: "8px" }}>
+      <div
+        data-aos="fade-up"
+        data-aos-delay="300"
+        style={{ marginBottom: "8px" }}
+      >
         <label
           style={{
             display: "block",
@@ -1433,6 +1471,8 @@ function Step3Invite({ onNext, onBack, formData }) {
       </div>
 
       <div
+        data-aos="fade-up"
+        data-aos-delay="300"
         style={{
           padding: "14px 16px",
           backgroundColor: "#f9fafb",
@@ -1631,8 +1671,12 @@ function Step4({ onBack, formData, setFormData }) {
   return (
     <div>
       <StepHeader onBack={onBack} backLabel="Set up your workspace" step={4} />
-      <h2 className="step-heading">What do you want to achieve?</h2>
+      <h2 data-aos="fade-right" data-aos-delay="400" className="step-heading">
+        What do you want to achieve?
+      </h2>
       <p
+        data-aos="fade-left"
+        data-aos-delay="600"
         style={{
           color: "#3A3A3ACC",
           fontSize: "0.875rem",
@@ -1647,7 +1691,7 @@ function Step4({ onBack, formData, setFormData }) {
 
       {errors.api && <ErrorMsg message={errors.api} />}
 
-      <div className="focus-grid">
+      <div data-aos="fade-up" data-aos-delay="300" className="focus-grid">
         {FOCUS_OPTIONS.map((opt) => (
           <div
             key={opt.id}

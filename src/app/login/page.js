@@ -362,7 +362,7 @@ export default function LoginPage() {
 
             <button
               data-aos="fade-up"
-              data-aos-delay="500"
+              data-aos-delay="400"
               style={{
                 width: "100%",
                 padding: "12px",
