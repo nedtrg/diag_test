@@ -708,19 +708,35 @@ export default function Dashboard() {
               gap: "14px",
             }}
           >
-            <div style={{ position: "relative", cursor: "pointer" }}>
-              <IconBell size={22} color="#6b7280" />
+            <div
+              style={{
+                position: "relative",
+                cursor: "pointer",
+                backgroundColor: "#F4F4F4",
+                borderRadius: "50%",
+              }}
+            >
+              <IconBell size={30} color="#6b7280" />
               <div
                 style={{
                   position: "absolute",
-                  top: -2,
-                  right: -2,
-                  width: 8,
-                  height: 8,
+                  top: -4,
+                  right: -4,
+                  width: 16,
+                  height: 16,
                   backgroundColor: "#4F46E5",
                   borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "0.6rem",
+                  fontWeight: 700,
+                  color: "white",
+                  lineHeight: 1,
                 }}
-              />
+              >
+                1
+              </div>
             </div>
             {/* User menu */}
             <div
