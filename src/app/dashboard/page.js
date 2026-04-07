@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   IconLayoutDashboard,
+  IconHome2Filled,
   IconChartBar,
   IconChartLine,
   IconUsers,
@@ -555,7 +556,7 @@ const STATUS_STYLES = {
 };
 
 const NAV_ITEMS = [
-  { label: "Dashboard", icon: IconLayoutDashboard },
+  { label: "Dashboard", icon: IconHome2Filled },
   { label: "Report", icon: IconChartBar },
   { label: "Analytics", icon: IconChartLine },
   { label: "Users", icon: IconUsers },
@@ -784,7 +785,7 @@ export default function Dashboard() {
                 >
                   {displayName}
                 </span>
-                <IconChevronDown size={14} color="#9ca3af" />
+                <IconChevronDown size={30} color="#3A3A3AE5" />
               </div>
 
               {showUserMenu && (
@@ -904,7 +905,7 @@ export default function Dashboard() {
                       backgroundColor: active ? "#f5f3ff" : "transparent",
                       color: active ? "#4f46e5" : "#6b7280",
                       fontSize: "0.875rem",
-                      fontWeight: active ? 600 : 400,
+                      fontWeight: active ? 500 : 400,
                     }}
                   >
                     <Icon size={18} />
