@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
-  IconLayoutDashboard,
   IconHome2Filled,
   IconChartBar,
   IconChartLine,
@@ -17,6 +16,8 @@ import {
   IconLogout,
 } from "@tabler/icons-react";
 import Image from "next/image";
+import useSessionTimeout from "@/hooks/useSessionTimeout";
+import SessionWarning from "@/components/SessionWarning";
 
 /* ─── Responsive CSS ─────────────────────────────────────────────────────────  */
 const DASH_CSS = `
@@ -88,6 +89,9 @@ const DASH_CSS = `
   @media (min-width: 768px) { .dash-main { padding: 28px 24px 28px; } }
   @media (min-width: 1024px) { .dash-main { padding: 32px; } }
 
+  .trial-card-main { display: block; }
+  @media (min-width: 768px) { .trial-card-main { display: none; } }
+
   /* KPI cards grid */
   .kpi-grid {
     display: grid;
@@ -112,9 +116,8 @@ const DASH_CSS = `
   .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .signups-table { width: 100%; border-collapse: collapse; min-width: 560px; }
 
-  /* Hide less important columns on mobile */
-  .col-joined { display: none; }
-  @media (min-width: 640px) { .col-joined { display: table-cell; } }
+  /* Shows all columns on all screens */
+  .col-joined { display: table-cell; }
 `;
 
 /* ─── Logo ───────────────────────────────────────────────────────────────────  */
@@ -571,6 +574,7 @@ export default function Dashboard() {
   const [totalPages, setTotalPages] = useState(1);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -584,6 +588,11 @@ export default function Dashboard() {
       "data-aos-once": "true",
     };
   };
+
+  const { resetTimer, logout } = useSessionTimeout({
+    onWarning: () => setShowWarning(true),
+    onLogout: () => setShowWarning(false),
+  });
 
   // ── Data fetched from MongoDB via /api/me and /api/stats ──────────────────
   const [dashUser, setDashUser] = useState(null); // user from DB
@@ -914,7 +923,7 @@ export default function Dashboard() {
                 );
               })}
             </div>
-            {/* Trial card */}
+            {/* Trial card — KEEP THIS inside sidebar for desktop */}
             <div
               style={{
                 margin: "16px",
@@ -923,16 +932,15 @@ export default function Dashboard() {
                 borderRadius: "12px",
               }}
             >
-              <div className="trial-icon" style={{ marginBottom: "12px" }}>
+              <div style={{ marginBottom: "12px" }}>
                 <Image
                   src="/Vector2.png"
                   alt="Gift"
                   width={32}
                   height={32}
-                  style={{ width: "28px", height: "auto" }}
+                  style={{ width: "32px", height: "auto" }}
                 />
               </div>
-
               <p
                 style={{
                   fontSize: "0.8rem",
@@ -951,7 +959,7 @@ export default function Dashboard() {
                   marginBottom: "12px",
                 }}
               >
-                Enjoy full access to all features , no limits, no commitments
+                Enjoy full access to all features, no limits, no commitments
                 (yet).
               </p>
               <button
@@ -1463,6 +1471,62 @@ export default function Dashboard() {
                 </button>
               </div>
             </div>
+            {/* Trial card — visible on all screens */}
+            <div
+              className="trial-card-main"
+              style={{
+                margin: "24px 0 0",
+                padding: "20px",
+                backgroundColor: "#f5f3ff",
+                borderRadius: "12px",
+              }}
+            >
+              <div style={{ marginBottom: "12px" }}>
+                <Image
+                  src="/Vector2.png"
+                  alt="Gift"
+                  width={32}
+                  height={32}
+                  style={{ width: "32px", height: "auto" }}
+                />
+              </div>
+              <p
+                style={{
+                  fontSize: "0.8rem",
+                  fontWeight: 700,
+                  color: "#111827",
+                  marginBottom: "12px",
+                }}
+              >
+                You're on a 7-day free trial
+              </p>
+              <p
+                style={{
+                  fontSize: "0.7rem",
+                  color: "#6b7280",
+                  lineHeight: 1.5,
+                  marginBottom: "12px",
+                }}
+              >
+                Enjoy full access to all features, no limits, no commitments
+                (yet).
+              </p>
+              <button
+                style={{
+                  width: "100%",
+                  padding: "8px",
+                  backgroundColor: "#4f46e5",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "8px",
+                  fontSize: "0.75rem",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                }}
+              >
+                Choose a Plan
+              </button>
+            </div>
           </main>
         </div>
 
@@ -1496,6 +1560,18 @@ export default function Dashboard() {
           })}
         </nav>
       </div>
+      <SessionWarning
+        visible={showWarning}
+        secondsLeft={120}
+        onStayLoggedIn={() => {
+          setShowWarning(false);
+          resetTimer();
+        }}
+        onLogoutNow={() => {
+          setShowWarning(false);
+          logout();
+        }}
+      />
     </>
   );
 }
